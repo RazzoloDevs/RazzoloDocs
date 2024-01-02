@@ -1,7 +1,24 @@
 \documentclass[10pt,a4paper]{article}
-\usepackage[T1]{fontenc}
+\bibliographystyle{ACM-Reference-Format}
+\usepackage[colorlinks=true, urlcolor=blue, linkcolor=red]{hyperref}
 \title{Razzolo}
+\author{Antonio Facchiano\\Salvatore Ruocco\\Simone Vittoria}
+\date{10 Gennaio 2024}
+
+\renewcommand\contentsname{Sommario}
+
 \begin{document}
 	\maketitle
+	\tableofcontents
+	\newpage
+	
+	\section{Introduzione}
+	Ruzzle è un videogioco sviluppato da \href{https://www.maginteractive.com}{MAG Interactive}, rilasciato nel Marzo del 2012 sugli store di Android e iOS.\\
+	Il meccanismo di gioco è ispirato ai giochi da tavolo "Il Paroliere" e "Scarabeo".\\
+	Ciascuna partita è divisa in tre round, e il punteggio finale è dato dalla somma dei punteggi ottenuti nei singoli round. In ciascun round il giocatore ha due minuti a disposizione per formare il maggior numero di parole di senso compiuto con le sedici lettere a disposizione nella griglia 4x4 sullo schermo. Le parole devono essere di almeno 2 lettere e devono essere formate unendo lettere adiacenti fra loro in orizzontale, verticale o diagonale. Non è possibile inserire la stessa casella-lettera più volte all'interno della stessa parola.\\
+	Come nello Scarabeo, a ciascuna lettera è assegnato un punteggio in base alla difficoltà di inserirla all'interno di parole di senso compiuto; ad esempio vocali comuni come A, E, I, O valgono 1 punto, mentre le consonanti più rare come la Z o la H valgono 8 punti.\\
+	Il punteggio totale assegnato a ciascuna parola trovata è dato dalla somma dei punteggi assegnati alle singole lettere più un "bonus lunghezza" per le parole più lunghe di cinque lettere. È possibile aumentare il proprio punteggio utilizzando le lettere contrassegnate da simboli-bonus: DL duplica il valore relativo alla lettera, TL triplica il suo valore; DW duplica e TW triplica il valore totale della parola. Il numero delle lettere bonus varia a seconda del round: nel primo round sono presenti solamente una DL e una TL, nel secondo round compare anche una DW mentre nel terzo sono presenti anche due DW e una TW. 
+	
+	\newpage
 	
 \end{document}
