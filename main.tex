@@ -1,24 +1,66 @@
 \documentclass[10pt,a4paper]{article}
 \bibliographystyle{ACM-Reference-Format}
 \usepackage[colorlinks=true, urlcolor=blue, linkcolor=red]{hyperref}
-\title{Razzolo}
+\hypersetup{colorlinks=true}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+
+\title{}
 \author{Antonio Facchiano\\Salvatore Ruocco\\Simone Vittoria}
 \date{10 Gennaio 2024}
 
-\renewcommand\contentsname{Sommario}
+\renewcommand\contentsname{Indice}
 
 \begin{document}
+	\begin{figure}
+		\centering
+		\includegraphics[scale=0.5]{icon}
+	\end{figure}
+	
 	\maketitle
-	\tableofcontents
 	\newpage
-	
+	{
+		\hypersetup{linkcolor=black}
+		\tableofcontents
+	}
+	\newpage
 	\section{Introduzione}
+	\subsection{Ruzzle}
 	Ruzzle è un videogioco sviluppato da \href{https://www.maginteractive.com}{MAG Interactive}, rilasciato nel Marzo del 2012 sugli store di Android e iOS.\\
-	Il meccanismo di gioco è ispirato ai giochi da tavolo "Il Paroliere" e "Scarabeo".\\
-	Ciascuna partita è divisa in tre round, e il punteggio finale è dato dalla somma dei punteggi ottenuti nei singoli round. In ciascun round il giocatore ha due minuti a disposizione per formare il maggior numero di parole di senso compiuto con le sedici lettere a disposizione nella griglia 4x4 sullo schermo. Le parole devono essere di almeno 2 lettere e devono essere formate unendo lettere adiacenti fra loro in orizzontale, verticale o diagonale. Non è possibile inserire la stessa casella-lettera più volte all'interno della stessa parola.\\
-	Come nello Scarabeo, a ciascuna lettera è assegnato un punteggio in base alla difficoltà di inserirla all'interno di parole di senso compiuto; ad esempio vocali comuni come A, E, I, O valgono 1 punto, mentre le consonanti più rare come la Z o la H valgono 8 punti.\\
+	Il meccanismo di gioco è ispirato ai giochi da tavolo \textit{Il Paroliere} e \textit{Scarabeo}.\\
+	Ciascuna partita è divisa in tre round, e il punteggio finale è dato dalla somma dei punteggi ottenuti nei singoli round. In ciascun round il giocatore ha due minuti a disposizione per formare il maggior numero di parole di senso compiuto con le sedici lettere a disposizione nella \textbf{griglia 4x4} sullo schermo. Le parole devono essere di almeno 2 lettere e devono essere formate unendo lettere adiacenti fra loro in orizzontale, verticale o diagonale. Non è possibile inserire la stessa casella-lettera più volte all'interno della stessa parola.\\
+	Come nello \textit{Scarabeo}, a ciascuna lettera è assegnato un punteggio in base alla difficoltà di inserirla all'interno di parole di senso compiuto; ad esempio vocali comuni come A, E, I, O valgono 1 punto, mentre le consonanti più rare come la Z o la H valgono 8 punti.\\
 	Il punteggio totale assegnato a ciascuna parola trovata è dato dalla somma dei punteggi assegnati alle singole lettere più un "bonus lunghezza" per le parole più lunghe di cinque lettere. È possibile aumentare il proprio punteggio utilizzando le lettere contrassegnate da simboli-bonus: DL duplica il valore relativo alla lettera, TL triplica il suo valore; DW duplica e TW triplica il valore totale della parola. Il numero delle lettere bonus varia a seconda del round: nel primo round sono presenti solamente una DL e una TL, nel secondo round compare anche una DW mentre nel terzo sono presenti anche due DW e una TW. 
-	
+	\subsection{Obiettivi}
+	Lo scopo di questo progetto è quello di creare un'IA capace di trovare tutte le parole italiane di senso compiuto contenute in una griglia 4x4 di caratteri data in input.
+	Quindi restituire in output le parole trovate e le coordinate all'interno della griglia.\\
+	Al momento, abbiamo deciso di non dare un punteggio alle parole trovate.
+	\subsection{Specifica PEAS}
+	Un ambiente viene generalmente descritto tramite la specifica PEAS, ovvero \textbf{P}erformance, \textbf{E}nvironment, \textbf{A}ctuators, \textbf{S}ensors.
+	\begin{itemize}
+		\item \textbf{P}: sono le misure di prestazione adottate per valutare l’operato di un agente, in questo caso vogliamo che l'agente sia completo e veloce.
+		\item \textbf{E}: descrizione degli elementi dell'ambiente. Il nostro ambiente è una griglia 4x4 dove ogni casella è un carattere dell'alfabeto italiano.
+		\item \textbf{A}: gli attuatori a disposizione dell'agente per intraprendere le azioni. In questo caso i nostri attuatori sono le otto direzioni: nord, nord-est, est, sud-est, sud, sud-ovest, ovest, nord-ovest.
+		\item \textbf{S}: i sensori attraverso i quali riceve gli input percettivi.
+	\end{itemize}
+	\subsection{Caratteristiche dell'ambiente}
+	\begin{itemize}
+		\item \textbf{Parzialmente osservabile}: l'agente non conosce a priori le coordinate di un carattere, ma data una coordinata, può conoscere il carattere contenuto in quel punto della griglia.
+		\item \textbf{Deterministico}: lo stato successivo dell’ambiente è completamente determinato dallo stato corrente e dall’azione eseguita dall’agente.
+		\item \textbf{Episodico}: l’esperienza dell’agente è divisa in “episodi” atomici, dove ciascun episodio consiste nell’eseguire una singola azione.
+		\item \textbf{Statico}: l'ambiente non muta durante l'esecuzione dell'agente.
+		\item \textbf{Discreto}: l’ambiente fornisce un numero limitato di percezioni e azioni distinte, chiaramente definite.
+		\item \textbf{Singolo agente}: l'ambiente consente la presenza di  un singolo agente con lo scopo di trovare tutte le parole di senso compiuto possibili.
+	\end{itemize}
+	\subsection{Formulazione del problema}
+	\begin{itemize}
+		\item \textbf{Stato iniziale}: griglia 4x4 dove ogni casella contiene una lettere dell'alfabeto italiano.
+		\item \textbf{Azioni}: otto direzioni: nord, nord-est, est, sud-est, sud, sud-ovest, ovest, nord-ovest. Queste non sono sempre tutte possibili nel caso in cui ci troviamo ai limiti della griglia, oppure la casella corrispondente è stata già visitata.
+		\item \textbf{Modello di transizioni}: ad ogni azione si andrà a controllare se il carattere contenuta nella casella appena visitata è utile per costruire una parola di senso compiuto.
+		\item \textbf{Test obiettivo}: trovare tutte le parole di senso compiuto possibili.
+		\item\textbf{Costo di cammino}: ogni azione ha lo stesso costo.
+	\end{itemize}
 	\newpage
+	\section{Algoritmi di ricerca}
 	
 \end{document}
