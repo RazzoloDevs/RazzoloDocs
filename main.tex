@@ -34,7 +34,7 @@
 	\subsection{Obiettivi}
 	Lo scopo di questo progetto è quello di creare un'IA capace di trovare tutte le parole italiane di senso compiuto contenute in una griglia 4x4 di caratteri data in input.
 	Quindi restituire in output le parole trovate e le coordinate all'interno della griglia.\\
-	Al momento, abbiamo deciso di non dare un punteggio alle parole trovate.
+	Al momento, abbiamo deciso di non dare un peso a ciascuna parola trovata, quindi non assegniamo a loro un punteggio.
 	\subsection{Specifica PEAS}
 	Un ambiente viene generalmente descritto tramite la specifica PEAS, ovvero \textbf{P}erformance, \textbf{E}nvironment, \textbf{A}ctuators, \textbf{S}ensors.
 	\begin{itemize}
@@ -60,7 +60,33 @@
 		\item \textbf{Test obiettivo}: trovare tutte le parole di senso compiuto possibili.
 		\item\textbf{Costo di cammino}: ogni azione ha lo stesso costo.
 	\end{itemize}
+	\subsection{Risorse}
+	\begin{itemize}
+		\item \href{https://github.com/RazzoloDevs/Razzolo}{\textbf{Repository GitHub}}
+		\item \textbf{Dizionario italiano} formato da 661563 vocaboli disponibile nella cartella \textit{resources} della repository
+	\end{itemize}
+	Nel prossimo paragrafo verrano descritti gli algoritmi utilizzati, per ognuno di essi verranno analizzate le prestazioni con i seguenti 4 indicatori:
+	\begin{itemize}
+		\item \textbf{Completezza}: se la soluzione esiste, l'algoritmo consente di trovarla.
+		\item \textbf{Ottimalità}; l'algoritmo garantisce di trovare la soluzione ottima.
+		\item \textbf{Complessità temporale}: il tempo impiegato per trovare una soluzione.
+		\item \textbf{Complessità spaziale}: la memoria necessaria per trovare una soluzione.
+	\end{itemize}
 	\newpage
-	\section{Algoritmi di ricerca}
-	
+	\section{Ricerca non informata}
+	Per raggiungere il nostro scopo, abbiamo deciso di utilizzare degli algoritmi di ricerca non informata.\\
+	Questi ultimi fanno riferimento alle strategie di ricerca che \textbf{non dispongono di informazioni aggiuntive sugli stati} oltre a quella fornita nella definizione del problema: tutto ciò che possono fare è generare successori e distinguere gli stati obiettivo dagli altri.\\
+	La principale differenza tra le varie strategie di ricerca non informata consiste nell’ordine in cui vengono espansi i nodi.\\
+	Data la loro natura, questi algoritmi \textbf{non sanno stimare quanto un nodo non obiettivo sia promettente} per la risoluzione del problema.\\
+	Gli algoritmi scelti sono: \textit{ricerca in ampiezza, ricerca in profondità e ricerca ad approfondimento iterativo}.
+	\subsection{Ricerca in ampiezza}
+	La ricerca in ampiezza è una strategia sistematica di ricerca, ovvero è in grado di \textbf{trovare	sempre una soluzione, se esiste}, nel quale si estende prima il nodo radice e poi i loro successori	e cosi via. In particolare nel nostro caso i nodi vengono espansi attraverso un determinato	ordine che sarebbe nord, nord-est, est, sud-est, sud, sud-ovest, ovest, nord-ovest.
+	Da un punto di vista pratico, questa strategia può essere implementata utilizzando una semplice \textbf{coda FIFO}. Di conseguenza, i nuovi nodi vanno in fondo alla coda e i nodi vecchi vengono espansi per primi. La ricerca in ampiezza espanderà tutti i nodi che precedono il nodo obiettivo fino a raggiungerlo.\\
+	All'algoritmo vengono dati in \textbf{input}: una matrice di caratteri 4x4 e un Set di vocaboli. L'algoritmo restituisce in \textbf{output} una Mappa in cui la chiave è una stringa che rappresenta una parola trovata, ad ogni chiave corrisponde una lista di coordinate.
+	Nel nostro caso partirà una ricerca in ampiezza per ogni casella della griglia, quindi in pratica verranno eseguite 16 visite in ampiezza.
+	Ad ogni passo, andiamo a verificare se il nodo attauale è un nodo obiettivo, successivamente avviamo un ciclo per esplorare tutti i nodi vicini.
+	Come conseguenza del fatto che espande tutti i nodi precedenti al nodo obiettivo conosciamo che la sua complessità temporale è O(bd) che nel nostro problema si traduce con un fattore di ramificazione b di 8 (le possibili azioni che ad ogni stato può effettuare) e d, che indica la profondità del nodo obiettivo più vicino allo stato iniziale. Mentre dal punto di vista della memoria occupata, dato che ogni nodo generato rimane in memoria, ci saranno $O(b^{d-1})$ nodi nell’insieme esplorato e O(bd) nodi nella frontiera, perciò la complessità complessiva è O(bd).
+	\includegraphics[scale=0.8]{bfs}
+	\newpage
+	 
 \end{document}
