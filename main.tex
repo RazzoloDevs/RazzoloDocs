@@ -80,13 +80,21 @@
 	Data la loro natura, questi algoritmi \textbf{non sanno stimare quanto un nodo non obiettivo sia promettente} per la risoluzione del problema.\\
 	Gli algoritmi scelti sono: \textit{ricerca in ampiezza, ricerca in profondità e ricerca ad approfondimento iterativo}.
 	\subsection{Ricerca in ampiezza}
-	La ricerca in ampiezza è una strategia sistematica di ricerca, ovvero è in grado di \textbf{trovare	sempre una soluzione, se esiste}, nel quale si estende prima il nodo radice e poi i loro successori	e cosi via. In particolare nel nostro caso i nodi vengono espansi attraverso un determinato	ordine che sarebbe nord, nord-est, est, sud-est, sud, sud-ovest, ovest, nord-ovest.
+	La ricerca in ampiezza è una strategia sistematica di ricerca, ovvero è in grado di \textbf{trovare	sempre una soluzione, se esiste}, nel quale si estende prima il nodo radice e poi i loro successori	e cosi via. In particolare nel nostro caso i nodi vengono espansi attraverso un determinato ordine che sarebbe nord, nord-est, est, sud-est, sud, sud-ovest, ovest, nord-ovest.
 	Da un punto di vista pratico, questa strategia può essere implementata utilizzando una semplice \textbf{coda FIFO}. Di conseguenza, i nuovi nodi vanno in fondo alla coda e i nodi vecchi vengono espansi per primi. La ricerca in ampiezza espanderà tutti i nodi che precedono il nodo obiettivo fino a raggiungerlo.\\
 	All'algoritmo vengono dati in \textbf{input}: una matrice di caratteri 4x4 e un Set di vocaboli. L'algoritmo restituisce in \textbf{output} una Mappa in cui la chiave è una stringa che rappresenta una parola trovata, ad ogni chiave corrisponde una lista di coordinate.
 	Nel nostro caso partirà una ricerca in ampiezza per ogni casella della griglia, quindi in pratica verranno eseguite 16 visite in ampiezza.
-	Ad ogni passo, andiamo a verificare se il nodo attauale è un nodo obiettivo, successivamente avviamo un ciclo per esplorare tutti i nodi vicini.
-	Come conseguenza del fatto che espande tutti i nodi precedenti al nodo obiettivo conosciamo che la sua complessità temporale è O(bd) che nel nostro problema si traduce con un fattore di ramificazione b di 8 (le possibili azioni che ad ogni stato può effettuare) e d, che indica la profondità del nodo obiettivo più vicino allo stato iniziale. Mentre dal punto di vista della memoria occupata, dato che ogni nodo generato rimane in memoria, ci saranno $O(b^{d-1})$ nodi nell’insieme esplorato e O(bd) nodi nella frontiera, perciò la complessità complessiva è O(bd).
+	Ad ogni passo, andiamo a verificare se il nodo attauale è un nodo obiettivo, successivamente avviamo un ciclo per esplorare tutti i nodi vicini.\\
+	Come conseguenza del fatto che espande tutti i nodi precedenti al nodo obiettivo conosciamo che la sua complessità temporale è O($b^d$) che nel nostro problema si traduce con un fattore di ramificazione b di 8 (le possibili azioni che ad ogni stato può effettuare) e d, che indica la profondità del nodo obiettivo più vicino allo stato iniziale. Mentre dal punto di vista della memoria occupata, ci saranno O($b^d$) nodi nella frontiera.\\
+	Completezza ??\\
+	Ottimalità ??\\
 	\includegraphics[scale=0.8]{bfs}
 	\newpage
-	 
+	\subsection{Ricerca in profondità}
+	La ricerca in profondità fa la stessa cosa della ricerca in ampiezza, ma in modo diverso. Infatti, non espande i nodi come un pendolo ma procede analizzando \textbf{un ramo alla volta della matrice}. Dunque raggiunge immediatamente il livello più profondo della matrice, dove i nodi non hanno successori. L’espansione di tali nodi li rimuove dalla frontiera, per cui la ricerca “torna indietro” (backtracking) per riconsiderare il nodo più profondo che ha successori non ancora espansi. L'implementazione è molto simile a quello della ricerca in ampiezza, solo che la frontiera fa uso di una coda LIFO (Stack), poiché verrà sempre espanso l’ultimo nodo generato. Di questo tipo di ricerca ne esiste anche una versione ricorsiva, in cui lo Stack è implicitamente fornito dalle chiamate ricorsive.\\
+	Questo algoritmo presenta dei \textbf{problemi} nel momento in cui l’albero di ricerca ha uno spazio degli stati con profondità infinita o con cicli, infatti l’algoritmo non terminerà. Quindi, possiamo sostenere che l’algoritmo di ricerca in profondità non è completo.
+	Ma in questo caso, l'albero di ricerca è rappresentato da una matrice di cardinalità finita, che evita stati ripetuti e cammini ridondanti, quindi la ricerca è completa, se la soluzione esiste, perché alla fine espanderà tutti i nodi.\\
+	La complessità temporale resta uguale a quello della ricerca in ampiezza, ovvero  O($b^m$) , dove m è la profondità massima di un nodo. Mentre lo spazio occupato è O(m), perché fa uso di backtracking, quindi non avremo mai uno Stack di taglia superiore a m. Da sottolineare che m può essere più grande di d.\\
+	\\
+	\textit{Non verrà riportato il codice di questo algoritmo essendo simile a quello mostrato precedentemente.}
 \end{document}
