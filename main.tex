@@ -85,8 +85,8 @@
 	All'algoritmo vengono dati in \textbf{input}: una matrice di caratteri 4x4 e un Set di vocaboli. L'algoritmo restituisce in \textbf{output} una Mappa in cui la chiave è una stringa che rappresenta una parola trovata, ad ogni chiave corrisponde una lista di coordinate.
 	Nel nostro caso partirà una ricerca in ampiezza per ogni casella della griglia, quindi in pratica verranno eseguite 16 visite in ampiezza.
 	Ad ogni passo, andiamo a verificare se il nodo attauale è un nodo obiettivo, successivamente avviamo un ciclo per esplorare tutti i nodi vicini.\\
+	E’ facilmente intuibile che l’algoritmo è completo, se la soluzione esiste, poiché espanderà tutti i nodi.
 	Come conseguenza del fatto che espande tutti i nodi precedenti al nodo obiettivo conosciamo che la sua complessità temporale è O($b^d$) che nel nostro problema si traduce con un fattore di ramificazione b di 8 (le possibili azioni che ad ogni stato può effettuare) e d, che indica la profondità del nodo obiettivo più vicino allo stato iniziale. Mentre dal punto di vista della memoria occupata, ci saranno O($b^d$) nodi nella frontiera.\\
-	Completezza ??\\
 	Ottimalità ??\\
 	\includegraphics[scale=0.8]{bfs}
 	\newpage
@@ -94,7 +94,32 @@
 	La ricerca in profondità fa la stessa cosa della ricerca in ampiezza, ma in modo diverso. Infatti, non espande i nodi come un pendolo ma procede analizzando \textbf{un ramo alla volta della matrice}. Dunque raggiunge immediatamente il livello più profondo della matrice, dove i nodi non hanno successori. L’espansione di tali nodi li rimuove dalla frontiera, per cui la ricerca “torna indietro” (backtracking) per riconsiderare il nodo più profondo che ha successori non ancora espansi. L'implementazione è molto simile a quello della ricerca in ampiezza, solo che la frontiera fa uso di una coda LIFO (Stack), poiché verrà sempre espanso l’ultimo nodo generato. Di questo tipo di ricerca ne esiste anche una versione ricorsiva, in cui lo Stack è implicitamente fornito dalle chiamate ricorsive.\\
 	Questo algoritmo presenta dei \textbf{problemi} nel momento in cui l’albero di ricerca ha uno spazio degli stati con profondità infinita o con cicli, infatti l’algoritmo non terminerà. Quindi, possiamo sostenere che l’algoritmo di ricerca in profondità non è completo.
 	Ma in questo caso, l'albero di ricerca è rappresentato da una matrice di cardinalità finita, che evita stati ripetuti e cammini ridondanti, quindi la ricerca è completa, se la soluzione esiste, perché alla fine espanderà tutti i nodi.\\
-	La complessità temporale resta uguale a quello della ricerca in ampiezza, ovvero  O($b^m$) , dove m è la profondità massima di un nodo. Mentre lo spazio occupato è O(m), perché fa uso di backtracking, quindi non avremo mai uno Stack di taglia superiore a m. Da sottolineare che m può essere più grande di d.\\
-	\\
-	\textit{Non verrà riportato il codice di questo algoritmo essendo simile a quello mostrato precedentemente.}
+	La complessità temporale resta uguale a quello della ricerca in ampiezza, ovvero O($b^m$) , dove m è la profondità massima di un nodo. Mentre lo spazio occupato è O(m), perché fa uso di backtracking, quindi non avremo mai uno Stack di taglia superiore a m. Da sottolineare che m può essere più grande di d.\\
+	Ottimalità ?? \\
+	\textit{Non verrà riportato il codice di questo algoritmo in quanto ritenuto simile a quello mostrato precedentemente.}\\
+	\subsection{Ricerca ad approfondimento iterativo}
+	null
+	\newpage
+	\section{Trie}
+	A questo punto, per migliorare i nostri algoritmi da un punto di vista computazionale, abbiamo deciso di rappresentare il dizionario di vocaboli non più tramite un set, ma con un'altra struttura dati, il Trie.\\
+	Un Trie è una struttura dati ad albero utilizzata principalmente per memorizzare un set di stringhe, dove le chiavi sono generalmente sequenze di caratteri. La struttura del trie consente una \textbf{ricerca efficiente}, inserimento e cancellazione di stringhe. Un trie è particolarmente utile in applicazioni che coinvolgono operazioni di prefissi, come nel nostro caso. Ogni nodo dell'albero rappresenta un singolo carattere, mentre i percorsi dalla radice alle foglie rappresentano le stringhe. Quindi cercare una stringa all'interno di questa struttura costa $\Theta$(n), dove n è la lunghezza della stringa. La radice dell'albero è un carattere comune a tutte le stringhe, ovvero un carattere vuoto.\\
+	Quest'idea ci è venuta inspirandoci alla codifica di Huffman, studiata durante l'esame di \textit{Progettazione Algoritmi}, ma sopratutto abbiamo pensato a come noi esseri umani \textbf{sfogliamo un dizionario cartaceo}, infatti, partiamo sempre cercando il primo carattere della parola andando in ordine alfabetico, successivamente il secondo, poi il terzo...\\
+	\\Questo è un esempio di Trie dopo aver inserito i seguenti vocaboli:
+	\begin{itemize}
+		\item dog
+		\item dot
+		\item pump
+		\item fat
+		\item fire
+	\end{itemize}
+	\begin{center}
+		\includegraphics[scale=0.3]{trie}
+	\end{center}
+	\newpage
+	\subsection{Ricerca in ampiezza}
+	aaa
+	\subsection{Ricerca in profondità}
+	aaa
+	\section{Considerazioni finali}
+	aaa
 \end{document}
