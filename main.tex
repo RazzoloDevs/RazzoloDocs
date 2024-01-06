@@ -100,26 +100,29 @@
 	\subsection{Ricerca ad approfondimento iterativo}
 	null
 	\newpage
-	\section{Trie}
-	A questo punto, per migliorare i nostri algoritmi da un punto di vista computazionale, abbiamo deciso di rappresentare il dizionario di vocaboli non più tramite un set, ma con un'altra struttura dati, il Trie.\\
-	Un Trie è una struttura dati ad albero utilizzata principalmente per memorizzare un set di stringhe, dove le chiavi sono generalmente sequenze di caratteri. La struttura del trie consente una \textbf{ricerca efficiente}, inserimento e cancellazione di stringhe. Un trie è particolarmente utile in applicazioni che coinvolgono operazioni di prefissi, come nel nostro caso. Ogni nodo dell'albero rappresenta un singolo carattere, mentre i percorsi dalla radice alle foglie rappresentano le stringhe. Quindi cercare una stringa all'interno di questa struttura costa $\Theta$(n), dove n è la lunghezza della stringa. La radice dell'albero è un carattere comune a tutte le stringhe, ovvero un carattere vuoto.\\
-	Quest'idea ci è venuta inspirandoci alla codifica di Huffman, studiata durante l'esame di \textit{Progettazione Algoritmi}, ma sopratutto abbiamo pensato a come noi esseri umani \textbf{sfogliamo un dizionario cartaceo}, infatti, partiamo sempre cercando il primo carattere della parola andando in ordine alfabetico, successivamente il secondo, poi il terzo...\\
-	\\Questo è un esempio di Trie dopo aver inserito i seguenti vocaboli:
-	\begin{itemize}
-		\item dog
-		\item dot
-		\item pump
-		\item fat
-		\item fire
-	\end{itemize}
+	\section{Ricerca informata}
+	A questo punto, per migliorare i nostri algoritmi da un punto di vista computazionale, abbiamo deciso di implementare degli algoritmi di ricerca informata.
+	Una strategia di ricerca informata può trovare soluzioni in modo più efficiente di una strategia non informata perché oltre a conoscere gli stati del problema conosce informazioni aggiuntive sul problema. Abbiamo pensato di dare più conoscenza all'algoritmo rappresentando il dizionario non più tramite un semplice Set di stringhe, ma con un'altra struttura dati, il Trie.\\\\
+	\begin{large}
+		\textbf{Trie}
+	\end{large}
+	\\
+	Un Trie è una struttura dati ad albero utilizzata principalmente per memorizzare un set di stringhe, dove le chiavi sono generalmente sequenze di caratteri. La struttura del trie consente una \textbf{ricerca efficiente}, inserimento e cancellazione di stringhe. Ogni nodo dell'albero rappresenta un singolo carattere, mentre i percorsi dalla radice alle foglie rappresentano le stringhe. Quindi cercare una stringa all'interno di questa struttura costa $\Theta$(n), dove n è la lunghezza della stringa. La radice dell'albero è un carattere comune a tutte le stringhe, ovvero un carattere vuoto.\\
+	Un trie è particolarmente utile in applicazioni che coinvolgono operazioni di prefissi, come nel nostro caso, infatti, data una stringa, possiamo cercare anche quali sono i caratteri successivi utili per formare una parola appartenente al dizionario. Questa funzionalità risulta utile durante l'esplorazione della matrice, infatti permette di poter escludere eventuali nodi che non portano alla costruzione di una parola di senso compiuto, evitando di esplorare stati inutili.
+	L'idea di utilizzare questa struttura ci è venuta inspirandoci alla codifica di Huffman, studiata durante l'esame di \textit{Progettazione Algoritmi}, ma sopratutto abbiamo pensato a come noi esseri umani \textbf{sfogliamo un dizionario cartaceo}, infatti, partiamo sempre cercando il primo carattere della parola andando in ordine alfabetico, successivamente il secondo, poi il terzo...
 	\begin{center}
 		\includegraphics[scale=0.3]{trie}
+		\\
+		\begin{tiny}
+		Questo è un esempio di Trie dopo aver inserito i seguenti vocaboli: \textit{dog, dot, pump, fat, fire}.
+		\end{tiny}
 	\end{center}
+
 	\newpage
 	\subsection{Ricerca in ampiezza}
-	aaa
+	null
 	\subsection{Ricerca in profondità}
-	aaa
+	null
 	\section{Considerazioni finali}
-	aaa
+	null
 \end{document}
