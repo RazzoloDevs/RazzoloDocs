@@ -68,7 +68,6 @@
 	Nel prossimo paragrafo verrano descritti gli algoritmi utilizzati, per ognuno di essi verranno analizzate le prestazioni con i seguenti 4 indicatori:
 	\begin{itemize}
 		\item \textbf{Completezza}: se la soluzione esiste, l'algoritmo consente di trovarla.
-		\item \textbf{Ottimalità}; l'algoritmo garantisce di trovare la soluzione ottima.
 		\item \textbf{Complessità temporale}: il tempo impiegato per trovare una soluzione.
 		\item \textbf{Complessità spaziale}: la memoria necessaria per trovare una soluzione.
 	\end{itemize}
@@ -87,15 +86,16 @@
 	Ad ogni passo, andiamo a verificare se il nodo attauale è un nodo obiettivo, successivamente avviamo un ciclo per esplorare tutti i nodi vicini.\\
 	E’ facilmente intuibile che l’algoritmo è completo, se la soluzione esiste, poiché espanderà tutti i nodi.
 	Come conseguenza del fatto che espande tutti i nodi precedenti al nodo obiettivo conosciamo che la sua complessità temporale è O($b^d$) che nel nostro problema si traduce con un fattore di ramificazione b di 8 (le possibili azioni che ad ogni stato può effettuare) e d, che indica la profondità del nodo obiettivo più vicino allo stato iniziale. Mentre dal punto di vista della memoria occupata, ci saranno O($b^d$) nodi nella frontiera.\\
-	Ottimalità ??\\
-	\includegraphics[scale=0.8]{bfs}
+	\begin{figure}
+		\includegraphics[width=1\textwidth]{bfs}
+		\caption{Ricerca in ampiezza - implementazione in Java}
+	\end{figure}
 	\newpage
 	\subsection{Ricerca in profondità}
 	La ricerca in profondità fa la stessa cosa della ricerca in ampiezza, ma in modo diverso. Infatti, non espande i nodi come un pendolo ma procede analizzando \textbf{un ramo alla volta della matrice}. Dunque raggiunge immediatamente il livello più profondo della matrice, dove i nodi non hanno successori. L’espansione di tali nodi li rimuove dalla frontiera, per cui la ricerca “torna indietro” (backtracking) per riconsiderare il nodo più profondo che ha successori non ancora espansi. L'implementazione è molto simile a quello della ricerca in ampiezza, solo che la frontiera fa uso di una coda LIFO (Stack), poiché verrà sempre espanso l’ultimo nodo generato. Di questo tipo di ricerca ne esiste anche una versione ricorsiva, in cui lo Stack è implicitamente fornito dalle chiamate ricorsive.\\
 	Questo algoritmo presenta dei \textbf{problemi} nel momento in cui l’albero di ricerca ha uno spazio degli stati con profondità infinita o con cicli, infatti l’algoritmo non terminerà. Quindi, possiamo sostenere che l’algoritmo di ricerca in profondità non è completo.
 	Ma in questo caso, l'albero di ricerca è rappresentato da una matrice di cardinalità finita, che evita stati ripetuti e cammini ridondanti, quindi la ricerca è completa, se la soluzione esiste, perché alla fine espanderà tutti i nodi.\\
 	La complessità temporale resta uguale a quello della ricerca in ampiezza, ovvero O($b^m$) , dove m è la profondità massima di un nodo. Mentre lo spazio occupato è O(m), perché fa uso di backtracking, quindi non avremo mai uno Stack di taglia superiore a m. Da sottolineare che m può essere più grande di d.\\
-	Ottimalità ?? \\
 	\textit{Non verrà riportato il codice di questo algoritmo in quanto ritenuto simile a quello mostrato precedentemente.}\\
 	\subsection{Ricerca ad approfondimento iterativo}
 	null
@@ -117,12 +117,41 @@
 		Questo è un esempio di Trie dopo aver inserito i seguenti vocaboli: \textit{dog, dot, pump, fat, fire}.
 		\end{tiny}
 	\end{center}
-
 	\newpage
-	\subsection{Ricerca in ampiezza}
-	null
-	\subsection{Ricerca in profondità}
-	null
+	\subsection{Ricerca in ampiezza con Trie}
+	Non c'è molta differenza con quanto già visto precedentemente nella ricerca in ampiezza, infatti l'esplorazione avviene allo stesso modo. La differenza sostanziale sta nel fatto che, nel corso della ricerca, \textbf{espandiamo solo i nodi i quali contengono caratteri potenziali per la costruzione di una parola del dizionario}.\\
+	Cerchiamo di chiarirci con un esempio: arrivati ad un certo punto dell'esplorazione, estraggo dalla coda una lista di coordinate le quali formano la parola "ABAC". Passando codesta stringa al metodo \textit{searchBySubstring("ABAC")}, il Trie ci dirà che gli unici caratteri utili per formare una parola del dizionario sono: 'A', 'H', 'O' (le parole in questione sono: "ABACA", "ABACHI", "ABACHISTA", "ABACHISTE", "ABACHISTI", "ABACO").\\
+	Quindi escuderemo dalla ricerca i nodi adiacenti che non contengono questi 3 caratteri.\\
+	Quest'algoritmo mantiene le caratteristiche della ricerca in ampiezza classica, infatti esso è completo e la sua complessità sia temporale che spaziale è di O($b^d$); ma come abbiamo detto durante il corso, esiste esponenziale ed esponenziale.\\
+	Anche perché in questa versione andiamo a diminuire il fattore di ramificazione b, infatti risulta difficile che un nodo possa visitare tutti e 8 i suoi nodi adiacenti, sopratutto negli step avanzati dell'algoritmo.\\
+	Possiamo vedere da questi test come le prestazioni migliorino di molto se confrontate con la sua versione classica.
+	\begin{center}
+		\begin{tabular}{ |p{2cm}||p{3cm}|p{3cm}| }
+			\hline
+			& Parole trovate & Tempo impiegato\\
+			\hline
+			Senza Trie & 79 & 4.45196 s \\
+			Con Trie & 79 & 0.00598925 s \\
+			\hline
+		\end{tabular}
+	\end{center}
+	La griglia data in input è la seguente:
+	\begin{tabular}{ |c c c c| } 
+		\hline
+		A & B & C & D \\ 
+		E & F & G & H \\ 
+		I & L & M & N \\ 
+		O & P & Q & R \\
+		\hline
+	\end{tabular}
+	\begin{figure}
+		\includegraphics[height=0.6\textheight]{bfsTrie}
+		\caption{Ricerca in ampiezza con Trie - implementazione in Java}
+	\end{figure}
+	\newpage
+	\subsection{Ricerca in profondità con Trie}
+	Non vogliamo dilungarci troppo su quest'algoritmo dato che è figlio della ricerca in profondità, quindi mantiene le sue caratteristiche già descritte. Alla rcierca vengono aggiunte le funzionalità del Trie, già descritte nel paragrafo precedente.
 	\section{Considerazioni finali}
-	null
+	Concludiamo dicendo che lavorare a questo progetto è stato utile per comprendere meglio le nozioni apprese durante il corso da un punto di vista pratico. Infatti, durante lo sviluppo, sono emerse altre interessanti idee di progetto, chissà, magari le svilupperemo in futuro..\\
+	Con questa documentazione speriamo di aver fatto un buon lavoro, tanto da meritarci un posto tra le documentazioni presenti sulla piattaforma E-Learning, per ispirare le prossime generazioni di studenti.
 \end{document}
