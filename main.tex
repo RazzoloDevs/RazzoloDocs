@@ -65,7 +65,7 @@
 		\item \href{https://github.com/RazzoloDevs/Razzolo}{\textbf{Repository GitHub}}
 		\item \textbf{Dizionario italiano} formato da 661563 vocaboli disponibile nella cartella \textit{resources} della repository
 	\end{itemize}
-	Nel prossimo paragrafo verrano descritti gli algoritmi utilizzati, per ognuno di essi verranno analizzate le prestazioni con i seguenti 4 indicatori:
+	Nel prossimo paragrafo verranno descritti gli algoritmi utilizzati, per ognuno di essi verranno analizzate le prestazioni con i seguenti 4 indicatori:
 	\begin{itemize}
 		\item \textbf{Completezza}: se la soluzione esiste, l'algoritmo consente di trovarla.
 		\item \textbf{Complessità temporale}: il tempo impiegato per trovare una soluzione.
@@ -83,7 +83,7 @@
 	Da un punto di vista pratico, questa strategia può essere implementata utilizzando una semplice \textbf{coda FIFO}. Di conseguenza, i nuovi nodi vanno in fondo alla coda e i nodi vecchi vengono espansi per primi. La ricerca in ampiezza espanderà tutti i nodi che precedono il nodo obiettivo fino a raggiungerlo.\\
 	All'algoritmo vengono dati in \textbf{input}: una matrice di caratteri 4x4 e un Set di vocaboli. L'algoritmo restituisce in \textbf{output} una Mappa in cui la chiave è una stringa che rappresenta una parola trovata, ad ogni chiave corrisponde una lista di coordinate.
 	Nel nostro caso partirà una ricerca in ampiezza per ogni casella della griglia, quindi in pratica verranno eseguite 16 visite in ampiezza.
-	Ad ogni passo, andiamo a verificare se il nodo attauale è un nodo obiettivo, successivamente avviamo un ciclo per esplorare tutti i nodi vicini.\\
+	Ad ogni passo, andiamo a verificare se il nodo attuale è un nodo obiettivo, successivamente avviamo un ciclo per esplorare tutti i nodi vicini.\\
 	E’ facilmente intuibile che l’algoritmo è completo, se la soluzione esiste, poiché espanderà tutti i nodi.
 	Come conseguenza del fatto che espande tutti i nodi precedenti al nodo obiettivo conosciamo che la sua complessità temporale è O($b^d$) che nel nostro problema si traduce con un fattore di ramificazione b di 8 (le possibili azioni che ad ogni stato può effettuare) e d, che indica la profondità del nodo obiettivo più vicino allo stato iniziale. Mentre dal punto di vista della memoria occupata, ci saranno O($b^d$) nodi nella frontiera.\\
 	\begin{figure}
@@ -121,7 +121,7 @@
 	\subsection{Ricerca in ampiezza con Trie}
 	Non c'è molta differenza con quanto già visto precedentemente nella ricerca in ampiezza, infatti l'esplorazione avviene allo stesso modo. La differenza sostanziale sta nel fatto che, nel corso della ricerca, \textbf{espandiamo solo i nodi i quali contengono caratteri potenziali per la costruzione di una parola del dizionario}.\\
 	Cerchiamo di chiarirci con un esempio: arrivati ad un certo punto dell'esplorazione, estraggo dalla coda una lista di coordinate le quali formano la parola "ABAC". Passando codesta stringa al metodo \textit{searchBySubstring("ABAC")}, il Trie ci dirà che gli unici caratteri utili per formare una parola del dizionario sono: 'A', 'H', 'O' (le parole in questione sono: "ABACA", "ABACHI", "ABACHISTA", "ABACHISTE", "ABACHISTI", "ABACO").\\
-	Quindi escuderemo dalla ricerca i nodi adiacenti che non contengono questi 3 caratteri.\\
+	Quindi escluderemo dalla ricerca i nodi adiacenti che non contengono questi 3 caratteri.\\
 	Quest'algoritmo mantiene le caratteristiche della ricerca in ampiezza classica, infatti esso è completo e la sua complessità sia temporale che spaziale è di O($b^d$); ma come abbiamo detto durante il corso, esiste esponenziale ed esponenziale.\\
 	Anche perché in questa versione andiamo a diminuire il fattore di ramificazione b, infatti risulta difficile che un nodo possa visitare tutti e 8 i suoi nodi adiacenti, sopratutto negli step avanzati dell'algoritmo.\\
 	Possiamo vedere da questi test come le prestazioni migliorino di molto se confrontate con la sua versione classica.
@@ -150,7 +150,7 @@
 	\end{figure}
 	\newpage
 	\subsection{Ricerca in profondità con Trie}
-	Non vogliamo dilungarci troppo su quest'algoritmo dato che è figlio della ricerca in profondità, quindi mantiene le sue caratteristiche già descritte. Alla rcierca vengono aggiunte le funzionalità del Trie, già descritte nel paragrafo precedente.
+	Non vogliamo dilungarci troppo su quest'algoritmo dato che è figlio della ricerca in profondità, quindi mantiene le sue caratteristiche già descritte. Alla ricerca vengono aggiunte le funzionalità del Trie, già descritte nel paragrafo precedente.
 	\section{Considerazioni finali}
 	Concludiamo dicendo che lavorare a questo progetto è stato utile per comprendere meglio le nozioni apprese durante il corso da un punto di vista pratico. Infatti, durante lo sviluppo, sono emerse altre interessanti idee di progetto, chissà, magari le svilupperemo in futuro..\\
 	Con questa documentazione speriamo di aver fatto un buon lavoro, tanto da meritarci un posto tra le documentazioni presenti sulla piattaforma E-Learning, per ispirare le prossime generazioni di studenti.
