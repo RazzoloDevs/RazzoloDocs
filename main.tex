@@ -4,10 +4,31 @@
 \hypersetup{colorlinks=true}
 \usepackage{graphicx}
 \graphicspath{ {./images/} }
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+	language=Python,
+	showstringspaces=false,
+	columns=flexible,
+	basicstyle={\small\ttfamily},
+	numbers=none,
+	numberstyle=\tiny\color{gray},
+	keywordstyle=\color{blue},
+	commentstyle=\color{dkgreen},
+	stringstyle=\color{mauve},
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=3
+}
 
 \title{}
 \author{Antonio Facchiano\\Salvatore Ruocco\\Simone Vittoria}
-\date{10 Gennaio 2024}
+\date{9 Gennaio 2024}
 
 \renewcommand\contentsname{Indice}
 
@@ -63,7 +84,7 @@
 	\subsection{Risorse}
 	\begin{itemize}
 		\item \href{https://github.com/RazzoloDevs/Razzolo}{\textbf{Repository GitHub}}
-		\item \textbf{Dizionario italiano} formato da 661563 vocaboli disponibile nella cartella \textit{resources} della repository
+		\item \textbf{Dizionario italiano} formato da 661.563 vocaboli disponibile nella cartella \textit{resources} della repository
 	\end{itemize}
 	Nel prossimo paragrafo verranno descritti gli algoritmi utilizzati, per ognuno di essi verranno analizzate le prestazioni con i seguenti 4 indicatori:
 	\begin{itemize}
@@ -85,12 +106,12 @@
 	Nel nostro caso partirà una ricerca in ampiezza per ogni casella della griglia, quindi in pratica verranno eseguite 16 visite in ampiezza.
 	Ad ogni passo, andiamo a verificare se il nodo attuale è un nodo obiettivo, successivamente avviamo un ciclo per esplorare tutti i nodi vicini.\\
 	E’ facilmente intuibile che l’algoritmo è completo, se la soluzione esiste, poiché espanderà tutti i nodi.
-	Come conseguenza del fatto che espande tutti i nodi precedenti al nodo obiettivo conosciamo che la sua complessità temporale è O($b^d$) che nel nostro problema si traduce con un fattore di ramificazione b di 8 (le possibili azioni che ad ogni stato può effettuare) e d, che indica la profondità del nodo obiettivo più vicino allo stato iniziale. Mentre dal punto di vista della memoria occupata, ci saranno O($b^d$) nodi nella frontiera.\\
-	\begin{figure}
+	Come conseguenza del fatto che espande tutti i nodi precedenti al nodo obiettivo conosciamo che la sua complessità temporale è O($b^d$) che nel nostro problema si traduce con un fattore di ramificazione b di 8 (le possibili azioni che ad ogni stato può effettuare) e d, che indica la profondità del nodo obiettivo più vicino allo stato iniziale. Mentre dal punto di vista della memoria occupata, ci saranno O($b^d$) nodi nella frontiera.
+	\begin{center}
 		\includegraphics[width=1\textwidth]{bfs}
-		\caption{Ricerca in ampiezza - implementazione in Java}
-	\end{figure}
-	\newpage
+		Ricerca in ampiezza - implementazione in Java
+		\newpage
+	\end{center}
 	\subsection{Ricerca in profondità}
 	La ricerca in profondità fa la stessa cosa della ricerca in ampiezza, ma in modo diverso. Infatti, non espande i nodi come un pendolo ma procede analizzando \textbf{un ramo alla volta della matrice}. Dunque raggiunge immediatamente il livello più profondo della matrice, dove i nodi non hanno successori. L’espansione di tali nodi li rimuove dalla frontiera, per cui la ricerca “torna indietro” (backtracking) per riconsiderare il nodo più profondo che ha successori non ancora espansi. L'implementazione è molto simile a quello della ricerca in ampiezza, solo che la frontiera fa uso di una coda LIFO (Stack), poiché verrà sempre espanso l’ultimo nodo generato. Di questo tipo di ricerca ne esiste anche una versione ricorsiva, in cui lo Stack è implicitamente fornito dalle chiamate ricorsive.\\
 	Questo algoritmo presenta dei \textbf{problemi} nel momento in cui l’albero di ricerca ha uno spazio degli stati con profondità infinita o con cicli, infatti l’algoritmo non terminerà. Quindi, possiamo sostenere che l’algoritmo di ricerca in profondità non è completo.
@@ -100,26 +121,41 @@
 	Questi algoritmi appena presentati risultano facili nella loro implementazione, ma poco interessanti sia per quanto riguarda la loro complessità asintotica, ma anche da un punto di vista di come viene risolto il problema, poiché alla fine tutto si riduce al bruteforce, ovvero provare tutte le combinazioni possibili. Già dal prossimo algoritmo vederemo qualcosa di più interessante.\\
 	\small{\textit{Non verrà riportato il codice di questo algoritmo in quanto ritenuto simile a quello mostrato precedentemente.}}\\
 	\subsection{Ricerca ad approfondimento iterativo}
-	null
-	\newpage
+	La ricerca ad approfondimento iterativo, oltre a migliorare la ricerca in profondità, è analoga a quella in ampiezza, poiché ad ogni iterazione esplora completamente un livello di nodi prima di prendere in considerazione il successivo. In altri termini, inizialmente l'algoritmo effettua le operazioni di ricerca nei nodi poco profondi, quelli vicini al nodo radice, \textbf{aumentando progressivamente la profondità} di scansione nei cicli di ricerca successivi. Tutto ciò migliorando i costi, senza compromettere la completezza.\\
+	Nel nostro caso, facciamo partire una ricerca ad approfondimento iterativo per ogni vocabolo del dizionario, quindi partiranno 661.563 ricerche.
+	\begin{lstlisting}
+	foundWords = []
+	for word in dictionary:
+		wordIsFound = False
+		for i=0; i < matrix.size &&  !wordIsFound; i++ :
+			for j=0; j < matrix.size &&  !wordIsFound; j++ :
+				result = approfondimentoIterativo(word, i, j)
+				if result != NULL:
+					foundWords += result
+					wordIsFound = True
+	\end{lstlisting}
+	L'algoritmo di ricerca ad approfondimento iterativo come parametri prende in input: la parola da trovare e le coordinate (i,j) della casella da cui iniziare la ricerca. Quindi, come prima cosa verifica che il primo carattere della stringa passata sia uguale al contenuto della casella iniziale, se così non fosse l'algoritmo ritorna NULL.
+	Dopo aver verificato questo step, l'algoritmo passa alla fase successiva, ovvero all'esplorazione dell'albero. In quanto richiede uno Stack per poter gestire la frontiera, può essere implementata in modo ricorsivo, come da noi fatto. Questa volta non vengono espansi tutti i nodi adiacenti allo stato attuale, ma solamente i nodi che contengono il carattere utile per la costruzione completa della stringa. Quindi ogni iterazione dell'esplorazione aggiunge un carattere alla stringa che stiamo trovando, l'esplorazione finisce quando troviamo la stringa completa (successo), oppure quando nessun nodo adiacente interessante (insuccesso).
+	Analizzando la complessità, possiamo notare come nel caso pessimo saranno generati O($b^d$) nodi, mentre dovremo memorizzare solo un solo cammino dalla radice ad un nodo foglia, insieme ai rimanenti nodi fratelli non espansi per ciascun nodo sul cammino. Una volta che un nodo è stato espanso, può essere rimosso dalla memoria non appena tutti i suoi discendenti	sono stati esplorati completamente. Per cui, la complessità sarà di O(bd).
+	\begin{center}
+		\includegraphics[width=1\textwidth]{iterativeDeepening}
+		Ricerca ad approfondimento iterativo - implementazione in Java
+		\newpage
+	\end{center}
 	\section{Ricerca informata}
 	A questo punto, per migliorare i nostri algoritmi da un punto di vista computazionale, abbiamo deciso di implementare degli algoritmi di ricerca informata.
 	Una strategia di ricerca informata può trovare soluzioni in modo più efficiente di una strategia non informata perché oltre a conoscere gli stati del problema conosce informazioni aggiuntive sul problema. Abbiamo pensato di dare più conoscenza all'algoritmo rappresentando il dizionario non più tramite un semplice Set di stringhe, ma con un'altra struttura dati, il Trie.\\\\
 	\begin{large}
-		\textbf{Trie}
+		\textbf{Trie}\\
 	\end{large}
-	\\
 	Un Trie è una struttura dati ad albero utilizzata principalmente per memorizzare un set di stringhe, dove le chiavi sono generalmente sequenze di caratteri. La struttura del trie consente una \textbf{ricerca efficiente}, inserimento e cancellazione di stringhe. Ogni nodo dell'albero rappresenta un singolo carattere, mentre i percorsi dalla radice alle foglie rappresentano le stringhe. Quindi cercare una stringa all'interno di questa struttura costa $\Theta$(n), dove n è la lunghezza della stringa. La radice dell'albero è un carattere comune a tutte le stringhe, ovvero un carattere vuoto.\\
 	Un trie è particolarmente utile in applicazioni che coinvolgono operazioni di prefissi, come nel nostro caso, infatti, data una stringa, possiamo cercare anche quali sono i caratteri successivi utili per formare una parola appartenente al dizionario. Questa funzionalità risulta utile durante l'esplorazione della matrice, infatti permette di poter escludere eventuali nodi che non portano alla costruzione di una parola di senso compiuto, evitando di esplorare stati inutili.
 	L'idea di utilizzare questa struttura ci è venuta inspirandoci alla codifica di Huffman, studiata durante l'esame di \textit{Progettazione Algoritmi}, ma sopratutto abbiamo pensato a come noi esseri umani \textbf{sfogliamo un dizionario cartaceo}, infatti, partiamo sempre cercando il primo carattere della parola andando in ordine alfabetico, successivamente il secondo, poi il terzo...
 	\begin{center}
-		\includegraphics[scale=0.3]{trie}
-		\\
-		\begin{tiny}
-		Questo è un esempio di Trie dopo aver inserito i seguenti vocaboli: \textit{dog, dot, pump, fat, fire}.
-		\end{tiny}
+		\includegraphics[width=1\textwidth]{trie}
+		\small{Questo è un esempio di Trie dopo aver inserito i seguenti vocaboli: \textit{dog, dot, pump, fat, fire}.}
+		\newpage
 	\end{center}
-	\newpage
 	\subsection{Ricerca in ampiezza con Trie}
 	Non c'è molta differenza con quanto già visto precedentemente nella ricerca in ampiezza, infatti l'esplorazione avviene allo stesso modo. La differenza sostanziale sta nel fatto che, nel corso della ricerca, \textbf{espandiamo solo i nodi i quali contengono caratteri potenziali per la costruzione di una parola del dizionario}.\\
 	Cerchiamo di chiarirci con un esempio: arrivati ad un certo punto dell'esplorazione, estraggo dalla coda una lista di coordinate le quali formano la parola "ABAC". Passando codesta stringa al metodo \textit{searchBySubstring("ABAC")}, il Trie ci dirà che gli unici caratteri utili per formare una parola del dizionario sono: 'A', 'H', 'O' (le parole in questione sono: "ABACA", "ABACHI", "ABACHISTA", "ABACHISTE", "ABACHISTI", "ABACO").\\
@@ -146,11 +182,10 @@
 		O & P & Q & R \\
 		\hline
 	\end{tabular}
-	\begin{figure}
-		\includegraphics[height=0.6\textheight]{bfsTrie}
-		\caption{Ricerca in ampiezza con Trie - implementazione in Java}
-	\end{figure}
-	\newpage
+	\begin{center}
+		\includegraphics[scale=0.55]{bfsTrie}
+		Ricerca in ampiezza con Trie - implementazione in Java
+	\end{center}
 	\subsection{Ricerca in profondità con Trie}
 	Non vogliamo dilungarci troppo su quest'algoritmo in quanto esso è figlio della ricerca in profondità, quindi mantiene le sue caratteristiche già descritte. Alla ricerca vengono aggiunte le funzionalità del Trie, già descritte nel paragrafo precedente.
 	\section{Considerazioni finali}
