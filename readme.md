@@ -109,7 +109,7 @@ ovvero **P**erformance, **E**nvironment, **A**ctuators, **S**ensors.
     nella cartella *resources* della repository
 
 Nel prossimo paragrafo verranno descritti gli algoritmi utilizzati, per
-ognuno di essi verranno analizzate le prestazioni con i seguenti 4
+ognuno di essi verranno analizzate le prestazioni con i seguenti 3
 indicatori:
 
 -   **Completezza**: se la soluzione esiste, l'algoritmo consente di
@@ -120,6 +120,8 @@ indicatori:
 
 -   **Complessità spaziale**: la memoria necessaria per trovare una
     soluzione.
+
+Non verrà presa in considerazione l'**ottimalità** in quanto gli algoritmi proposti per questo specifico problema porteranno sempre ad una soluzione ottimale.
 
 # Ricerca non informata
 
