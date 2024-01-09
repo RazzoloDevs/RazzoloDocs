@@ -165,10 +165,7 @@ stato può effettuare) e d, che indica la profondità del nodo obiettivo
 più vicino allo stato iniziale. Mentre dal punto di vista della memoria
 occupata, ci saranno O($b^d$) nodi nella frontiera.
 
-::: center
-![image](bfs){width="100%"} Ricerca in ampiezza - implementazione in
-Java
-:::
+![image](images/bfs.png)Ricerca in ampiezza - implementazione in Java
 
 ## Ricerca in profondità
 
@@ -205,7 +202,7 @@ risolto il problema, poiché alla fine tutto si riduce al bruteforce,
 ovvero provare tutte le combinazioni possibili. Già dal prossimo
 algoritmo vederemo qualcosa di più interessante.\
 *Non verrà riportato il codice di questo algoritmo in quanto ritenuto
-simile a quello mostrato precedentemente.*\
+simile a quello mostrato precedentemente.*
 
 ## Ricerca ad approfondimento iterativo
 
@@ -253,10 +250,7 @@ nodo è stato espanso, può essere rimosso dalla memoria non appena tutti
 i suoi discendenti sono stati esplorati completamente. Per cui, la
 complessità sarà di O(bd).
 
-::: center
-![image](iterativeDeepening){width="100%"} Ricerca ad approfondimento
-iterativo - implementazione in Java
-:::
+![image](images/iterativeDeepening.png){width="100%"} Ricerca ad approfondimento iterativo - implementazione in Java
 
 # Ricerca informata
 
@@ -267,13 +261,9 @@ soluzioni in modo più efficiente di una strategia non informata perché
 oltre a conoscere gli stati del problema conosce informazioni aggiuntive
 sul problema. Abbiamo pensato di dare più conoscenza all'algoritmo
 rappresentando il dizionario non più tramite un semplice Set di
-stringhe, ma con un'altra struttura dati, il Trie.\
-\
+stringhe, ma con un'altra struttura dati, il Trie.
 
-::: large
-**Trie**\
-:::
-
+## Trie
 Un Trie è una struttura dati ad albero utilizzata principalmente per
 memorizzare un set di stringhe, dove le chiavi sono generalmente
 sequenze di caratteri. La struttura del trie consente una **ricerca
@@ -297,10 +287,8 @@ dizionario cartaceo**, infatti, partiamo sempre cercando il primo
 carattere della parola andando in ordine alfabetico, successivamente il
 secondo, poi il terzo\...
 
-::: center
-![image](trie){width="100%"} Questo è un esempio di Trie dopo aver
+![image](images/trie.png)Questo è un esempio di Trie dopo aver
 inserito i seguenti vocaboli: *dog, dot, pump, fat, fire*.
-:::
 
 ## Ricerca in ampiezza con Trie
 
@@ -311,11 +299,11 @@ differenza sostanziale sta nel fatto che, nel corso della ricerca,
 costruzione di una parola del dizionario**.\
 Cerchiamo di chiarirci con un esempio: arrivati ad un certo punto
 dell'esplorazione, estraggo dalla coda una lista di coordinate le quali
-formano la parola \"ABAC\". Passando codesta stringa al metodo
-*searchBySubstring(\"ABAC\")*, il Trie ci dirà che gli unici caratteri
+formano la parola "ABAC". Passando codesta stringa al metodo
+*searchBySubstring("ABAC")*, il Trie ci dirà che gli unici caratteri
 utili per formare una parola del dizionario sono: 'A', 'H', 'O' (le
-parole in questione sono: \"ABACA\", \"ABACHI\", \"ABACHISTA\",
-\"ABACHISTE\", \"ABACHISTI\", \"ABACO\").\
+parole in questione sono: "ABACA", "ABACHI", "ABACHISTA",
+"ABACHISTE", "ABACHISTI", "ABACO").\
 Quindi escluderemo dalla ricerca i nodi adiacenti che non contengono
 questi 3 caratteri.\
 Quest'algoritmo mantiene le caratteristiche della ricerca in ampiezza
@@ -329,25 +317,20 @@ dell'algoritmo.\
 Possiamo vedere da questi test come le prestazioni migliorino di molto
 se confrontate con la sua versione classica.
 
-::: center
-               Parole trovate   Tempo impiegato
-  ------------ ---------------- -----------------
-  Senza Trie   79               4.45196 s
-  Con Trie     79               0.00598925 s
-:::
+|            | Parole trovate | Tempo impiegato |
+|------------|----------------|-----------------|
+| Senza Trie | 79             | 4.45196 s       |
+| Con Trie   | 79             | 0.00598925 s    |
 
 La griglia data in input è la seguente:
 
-  --- --- --- ---
-   A   B   C   D
-   E   F   G   H
-   I   L   M   N
-   O   P   Q   R
-  --- --- --- ---
+| **A** | **B** | **C** | **D** |
+|-------|-------|-------|-------|
+| **E** | **F** | **G** | **H** |
+| **I** | **L** | **M** | **N** |
+| **O** | **P** | **Q** | **R** |
 
-::: center
-![image](bfsTrie) Ricerca in ampiezza con Trie - implementazione in Java
-:::
+![image](images/bfsTrie.png) Ricerca in ampiezza con Trie - implementazione in Java
 
 ## Ricerca in profondità con Trie
 
