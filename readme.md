@@ -1,4 +1,4 @@
-![image](icon)
+![image](images/icon.png)
 
 # Introduzione
 
