@@ -54,10 +54,12 @@ ovvero **P**erformance, **E**nvironment, **A**ctuators, **S**ensors.
     italiano.
 
 -   **A**: gli attuatori a disposizione dell'agente per intraprendere le
-    azioni. In questo caso i nostri attuatori sono le otto direzioni:
-    nord, nord-est, est, sud-est, sud, sud-ovest, ovest, nord-ovest.
+    azioni. Nel nostro caso l'attuatore è la visualizzazione delle parole
+    trovate attraverso il terminale.
 
 -   **S**: i sensori attraverso i quali riceve gli input percettivi.
+    Nel nostro caso i sensori sono gli strumenti con cui, noi umani,
+    interagiamo con la macchina su cui viene eseguito l'agente
 
 ## Caratteristiche dell'ambiente
 
@@ -159,13 +161,12 @@ verranno eseguite 16 visite in ampiezza. Ad ogni passo, andiamo a
 verificare se il nodo attuale è un nodo obiettivo, successivamente
 avviamo un ciclo per esplorare tutti i nodi vicini.\
 E' facilmente intuibile che l'algoritmo è completo, se la soluzione
-esiste, poiché espanderà tutti i nodi. Come conseguenza del fatto che
-espande tutti i nodi precedenti al nodo obiettivo conosciamo che la sua
-complessità temporale è O($b^d$) che nel nostro problema si traduce con
-un fattore di ramificazione b di 8 (le possibili azioni che ad ogni
-stato può effettuare) e d, che indica la profondità del nodo obiettivo
-più vicino allo stato iniziale. Mentre dal punto di vista della memoria
-occupata, ci saranno O($b^d$) nodi nella frontiera.
+esiste, poiché espanderà tutti i nodi. Come conseguenza del fatto che espande
+tutti i nodi conosciamo che la sua complessità temporale è O($b^d$) che nel
+nostro problema si traduce con un fattore di ramificazione b di 8
+(le possibili azioni che ad ogni stato può effettuare) e d che indica la profondità
+massima di un nodo. Mentre dal punto di vista della memoria occupata,
+ci saranno O($b^d$) nodi nella frontiera.
 
 ![image](images/bfs.png)Ricerca in ampiezza - implementazione in Java
 
@@ -192,11 +193,8 @@ finita, che evita stati ripetuti e cammini ridondanti, quindi la ricerca
 è completa, se la soluzione esiste, perché alla fine espanderà tutti i
 nodi.\
 Anche qui partiranno 16 ricerche in profondità, una per ogni casella.\
-La complessità temporale resta uguale a quello della ricerca in
-ampiezza, ovvero O($b^m$) , dove m è la profondità massima di un nodo.
-Mentre lo spazio occupato è O(m), perché fa uso di backtracking, quindi
-non avremo mai uno Stack di taglia superiore a m. Da sottolineare che m
-può essere più grande di d.\
+La complessità temporale resta uguale a quello della ricerca in ampiezza,
+ovvero O($b^d$). Mentre lo spazio occupato è O(b*d).\
 Questi algoritmi appena presentati risultano facili nella loro
 implementazione, ma poco interessanti sia per quanto riguarda la loro
 complessità asintotica, ma anche da un punto di vista di come viene
