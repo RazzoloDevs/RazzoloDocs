@@ -63,9 +63,9 @@ ovvero **P**erformance, **E**nvironment, **A**ctuators, **S**ensors.
 
 ## Caratteristiche dell'ambiente
 
--   **Parzialmente osservabile**: l'agente non conosce a priori le
-    coordinate di un carattere, ma data una coordinata, può conoscere il
-    carattere contenuto in quel punto della griglia.
+-   **Parzialmente osservabile**: l'agente conosce solo il valore della cella
+    in cui si trova in un dato momento, e non ha informazioni sulle altre celle
+    finché non vi si sposta sopra.
 
 -   **Deterministico**: lo stato successivo dell'ambiente è
     completamente determinato dallo stato corrente e dall'azione
@@ -94,9 +94,9 @@ ovvero **P**erformance, **E**nvironment, **A**ctuators, **S**ensors.
     nel caso in cui ci troviamo ai limiti della griglia, oppure la
     casella corrispondente è stata già visitata.
 
--   **Modello di transizioni**: ad ogni azione si andrà a controllare se
-    il carattere contenuta nella casella appena visitata è utile per
-    costruire una parola di senso compiuto.
+-   **Modello di transizioni**: dopo aver eseguito uno spostamento,
+    l'agente controlla il carattere contenuto nella nuova cella e determina 
+    se questo carattere è utile per formare una parola di senso compiuto.
 
 -   **Test obiettivo**: trovare tutte le parole di senso compiuto
     possibili.
@@ -143,10 +143,11 @@ ricerca ad approfondimento iterativo*.
 ## Ricerca in ampiezza
 
 La ricerca in ampiezza è una strategia sistematica di ricerca, ovvero è
-in grado di **trovare sempre una soluzione, se esiste**, nel quale si
-estende prima il nodo radice e poi i loro successori e cosi via. In
-particolare nel nostro caso i nodi vengono espansi attraverso un
-determinato ordine che sarebbe nord, nord-est, est, sud-est, sud,
+in grado di **trovare sempre una soluzione, se esiste**, La ricerca inizia
+dalla radice e esplora tutti i nodi a quella profondità prima di passare
+ai nodi del livello successivo. In altre parole, espande prima tutti i nodi
+fratelli prima di passare ai loro nodi figli. Nel nostro caso i nodi vengono
+espansi attraverso il seguente ordine: nord, nord-est, est, sud-est, sud,
 sud-ovest, ovest, nord-ovest. Da un punto di vista pratico, questa
 strategia può essere implementata utilizzando una semplice **coda
 FIFO**. Di conseguenza, i nuovi nodi vanno in fondo alla coda e i nodi
@@ -174,8 +175,8 @@ ci saranno O($b^d$) nodi nella frontiera.
 
 La ricerca in profondità fa la stessa cosa della ricerca in ampiezza, ma
 in modo diverso. Infatti, non espande i nodi come un pendolo ma procede
-analizzando **un ramo alla volta della matrice**. Dunque raggiunge
-immediatamente il livello più profondo della matrice, dove i nodi non
+analizzando **un ramo alla volta della matrice**. Dunque raggiunge immediatamente
+il livello più profondo dell'albero di ricerca, dove i nodi non
 hanno successori. L'espansione di tali nodi li rimuove dalla frontiera,
 per cui la ricerca "torna indietro" (backtracking) per riconsiderare il
 nodo più profondo che ha successori non ancora espansi.
@@ -207,13 +208,14 @@ simile a quello mostrato precedentemente.*
 ## Ricerca ad approfondimento iterativo
 
 La ricerca ad approfondimento iterativo, oltre a migliorare la ricerca
-in profondità, è analoga a quella in ampiezza, poiché ad ogni iterazione
-esplora completamente un livello di nodi prima di prendere in
-considerazione il successivo. In altri termini, inizialmente l'algoritmo
-effettua le operazioni di ricerca nei nodi poco profondi, quelli vicini
-al nodo radice, **aumentando progressivamente la profondità** di
-scansione nei cicli di ricerca successivi. Tutto ciò migliorando i
-costi, senza compromettere la completezza.\
+in profondità, è analoga per certi versi a quella in ampiezza, siccome
+ad ogni iterazione esplora completamente un livello di nodi prima di prendere
+in considerazione il livello successivo. Inizialmente, l'algoritmo effettua
+la ricerca sui nodi poco profondi, quelli vicini al nodo radice,
+**aumentando progressivamente la profondità** di scansione nei cicli di ricerca
+successivi. La ricerca ad approfondimento iterativo combina i vantaggi
+della ricerca in ampiezza in termini di completezza e ottimalità,
+con i vantaggi della ricerca in profondità in termini di uso della memoria.\
 Nel nostro caso, facciamo partire una ricerca ad approfondimento
 iterativo per ogni vocabolo del dizionario, quindi partiranno 661.563
 ricerche.
